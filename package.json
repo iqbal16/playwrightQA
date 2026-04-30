@@ -3,8 +3,12 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "playwright test"
-  },
+    "clean": "powershell -NoProfile -Command \"Remove-Item -Recurse -Force test-results, playwright-report, blob-report -ErrorAction SilentlyContinue\"",
+    "test": "playwright test",
+    "test:clean": "npm run clean && playwright test",
+    "test:headed": "playwright test --headed",
+    "report": "playwright show-report"
+},
   "keywords": [],
   "author": "",
   "license": "ISC",
