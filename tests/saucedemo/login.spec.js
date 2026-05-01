@@ -30,7 +30,7 @@ test('user cannot login with invalid password', async ({page}) => {
 });
 
 test('locked out user cannot login', async({page}) =>{
-    await page.goto ('/')
+    await page.goto ('/');
 
     await page.fill ('[data-test="username"]', 'locked_out_user' );
     await page.fill ('[data-test="password"]', 'secret_sauce');
@@ -38,5 +38,41 @@ test('locked out user cannot login', async({page}) =>{
 
     await expect(page.locator('[data-test="error"]')).toBeVisible();
     await expect(page.locator('[data-test="error"]')).toContainText("Epic sadface: Sorry, this user has been locked out.");
+})
+
+test('user cannot login with empty username', async ({page}) => {
+    await page.goto ('/');
+
+    await page.fill ('[data-test="password"]', 'secret_sauce');
+    await page.click('[data-test="login-button"]');
+
+    await expect(page.locator('[data-test="error"]')).toBeVisible();
+    await expect(page.locator('[data-test="error"]')).toContainText("Epic sadface: Username is required");
+
+})
+
+test('user cannot login with empty password', async ({page}) => {
+    await page.goto ('/');
+
+    await page.fill ('[data-test="username"]', 'standard_user');
+    await page.click('[data-test="login-button"]');
+
+    await expect(page.locator('[data-test="error"]')).toBeVisible();
+    await expect(page.locator('[data-test="error"]')).toContainText("Epic sadface: Password is required");
+
+})
+
+test('user can close login error message', async ({page}) => {
+    await page.goto ('/');
+
+    await page.fill ('[data-test="username"]', 'standard_user' );
+    await page.fill ('[data-test="password"]', 'password123');
+    await page.click('[data-test="login-button"]');
+
+    await expect(page.locator('[data-test="error"]')).toBeVisible(); //expect locator ditambah dengan ada memastikan locator teresebut terlihat 
+    
+    await page.click('[data-test="error-button"]');
+
+    await expect(page.locator('[data-test="error"]')).toBeHidden();
 })
 
