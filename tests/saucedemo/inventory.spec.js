@@ -103,7 +103,7 @@ test ('user dapat membuka detail product', async ({page}) => {
     await expect(page.locator('[data-test="inventory-item-name"]')).toHaveText("Sauce Labs Backpack");
 });
 
-test ('user dapat kembali ke iventory product', async ({page}) => {
+test ('user dapat kembali ke inventory product', async ({page}) => {
     // Login terlebih dahulu sebelum membuka detail product.
     await loginAsStandardUser (page);
 
@@ -155,4 +155,40 @@ test ('badge pada cart berhasil hilang setelah remove', async ({page}) => {
 
     // Setelah semua product dihapus, badge cart tidak lagi tampil.
     await expect(page.locator('[data-test="shopping-cart-badge"]')).toBeHidden();
+});
+
+test ('user bisa membuka halaman cart dari inventory', async ({page}) => {
+    // Login terlebih dahulu sebelum membuka halaman cart.
+    await loginAsStandardUser (page);
+
+    // Tambahkan product ke cart agar halaman cart memiliki item untuk divalidasi di flow berikutnya.
+    await page.click('[data-test="add-to-cart-sauce-labs-backpack"]');
+
+    // Klik icon cart di kanan atas untuk berpindah ke halaman cart.
+    await page.click('[data-test="shopping-cart-link"]');
+
+    // Validasi user berhasil masuk ke halaman cart.
+    await expect(page).toHaveURL(/cart/);
+
+    // Validasi title halaman cart adalah Your Cart.
+    await expect(page.locator('[data-test="title"]')).toHaveText('Your Cart');
+});
+
+test ('user bisa logout dari inventory page', async ({page}) => {
+    // Login terlebih dahulu sebelum melakukan logout.
+    await loginAsStandardUser (page);
+
+    // Klik button burger menu untuk membuka sidebar menu.
+    // Selector #react-burger-menu-btn dipakai karena data-test="open-menu" berada di icon gambar,
+    // sedangkan element yang benar-benar menerima klik adalah button wrapper-nya.
+    await page.click('#react-burger-menu-btn');
+
+    // Klik menu Logout pada sidebar.
+    await page.click('[data-test="logout-sidebar-link"]');
+
+    // Validasi user kembali ke halaman login SauceDemo.
+    await expect(page).toHaveURL('https://www.saucedemo.com/');
+
+    // Validasi tombol Login muncul kembali sebagai tanda user sudah logout.
+    await expect(page.locator('[data-test="login-button"]')).toBeVisible();
 });

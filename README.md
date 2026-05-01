@@ -44,6 +44,8 @@ Scenario yang sudah dibuat:
 - User bisa sorting product name Z to A
 - User bisa sorting product price high to low
 - Cart badge hilang setelah semua product di-remove
+- User bisa membuka halaman cart dari inventory
+- User bisa logout dari inventory page
 
 ## Project Structure
 
