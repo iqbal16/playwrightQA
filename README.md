@@ -2,7 +2,7 @@
 
 Automation testing project untuk website [SauceDemo](https://www.saucedemo.com/) menggunakan Playwright.
 
-Project ini dibuat sebagai latihan dan portfolio QA Automation dengan fokus pada functional UI testing, termasuk login flow, inventory page, cart behavior, sorting product, dan GitHub Actions CI.
+Project ini dibuat sebagai latihan dan portfolio QA Automation dengan fokus pada functional UI testing, login flow, inventory page, cart behavior, checkout flow, dan GitHub Actions CI.
 
 ## Tech Stack
 
@@ -46,6 +46,30 @@ Scenario yang sudah dibuat:
 - Cart badge hilang setelah semua product di-remove
 - User bisa membuka halaman cart dari inventory
 - User bisa logout dari inventory page
+
+### Cart
+
+Test file: `tests/saucedemo/cart.spec.js`
+
+Scenario yang sudah dibuat:
+
+- User bisa melihat product yang sudah ditambahkan di cart
+- User bisa remove product dari cart page
+- User bisa kembali ke inventory dari cart
+- User bisa lanjut ke checkout dari cart
+
+### Checkout
+
+Test file: `tests/saucedemo/checkout.spec.js`
+
+Scenario yang sudah dibuat:
+
+- User bisa membuka halaman checkout information
+- User tidak bisa lanjut checkout jika first name kosong
+- User tidak bisa lanjut checkout jika last name kosong
+- User tidak bisa lanjut checkout jika postal code kosong
+- User bisa lanjut ke checkout overview
+- User bisa finish order
 
 ## Project Structure
 
@@ -117,6 +141,18 @@ Run only SauceDemo inventory tests:
 npx playwright test tests/saucedemo/inventory.spec.js
 ```
 
+Run only SauceDemo cart tests:
+
+```bash
+npx playwright test tests/saucedemo/cart.spec.js
+```
+
+Run only SauceDemo checkout tests:
+
+```bash
+npx playwright test tests/saucedemo/checkout.spec.js
+```
+
 Open HTML report:
 
 ```bash
@@ -185,8 +221,8 @@ locked_out_user
 
 Project ini masih dikembangkan bertahap. Next coverage yang bisa ditambahkan:
 
-- Cart page validation
-- Checkout flow
-- Page Object Model implementation
 - Test data management
-- More reusable helper functions
+- Page Object Model implementation
+- Shared test fixtures
+- Additional checkout overview validation
+- Visual or API testing practice

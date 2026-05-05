@@ -75,4 +75,3 @@ test('user can close login error message', async ({page}) => {
 
     await expect(page.locator('[data-test="error"]')).toBeHidden();
 })
-
